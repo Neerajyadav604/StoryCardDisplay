@@ -7,15 +7,15 @@ function App() {
   const stories = useFetchStories();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const itemsPerPage = 8; // 8 cards per page (2 rows × 4 columns)
+  const itemsPerPage = 8; 
 
-  // Get unique Statuses from stories
+ 
   const Statuses = useMemo(() => {
     const uniqueStatuses = [...new Set(stories.map(story => story.Status))];
-    return uniqueStatuses.filter(Boolean); //move any undefined/null values
+    return uniqueStatuses.filter(Boolean);
   }, [stories]);
 
-  // Filter stories based on selected Status
+  
   const filteredStories = useMemo(() => {
     if (selectedStatus === "all") {
       return stories;
@@ -23,14 +23,14 @@ function App() {
     return stories.filter(story => story.Status === selectedStatus);
   }, [stories, selectedStatus]);
 
-  // Calculate current stories to display
+
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const currentStories = filteredStories.slice(indexOfFirst, indexOfLast);
 
   const totalPages = Math.ceil(filteredStories.length / itemsPerPage);
 
-  // Reset to page 1 when filter changes
+
   const handleStatusChange = (Status) => {
     setSelectedStatus(Status);
     setCurrentPage(1);
@@ -44,7 +44,7 @@ function App() {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  // Get button styles based on Status
+  
   const getButtonStyles = (Status) => {
     const baseStyles = "px-8 py-3 rounded-full font-bold text-white shadow-lg transition-all flex items-center gap-2";
     
@@ -66,19 +66,7 @@ function App() {
     return `${baseStyles} bg-gray-700 opacity-60 hover:opacity-80`;
   };
 
-  // Get icon for Status
-  const getStatusIcon = (Status) => {
-    switch(Status) {
-      case "new":
-        return "🅰️";
-      case "in progress":
-        return "🏆";
-      case "completed":
-        return "✅";
-      default:
-        return "";
-    }
-  };
+  
 
   return (
     <div className="App min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-indigo-950 py-10 px-4">
