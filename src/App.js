@@ -1,21 +1,20 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import Cards from "./Cards/Cards";
 import useFetchStories from "./hook/Fetchstorieshook";
 
-
 function App() {
   const stories = useFetchStories();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const itemsPerPage = 8; 
+  const itemsPerPage = 8;
 
- 
   const Statuses = useMemo(() => {
     const uniqueStatuses = [...new Set(stories.map(story => story.Status))];
     return uniqueStatuses.filter(Boolean);
   }, [stories]);
 
-  
   const filteredStories = useMemo(() => {
     if (selectedStatus === "all") {
       return stories;
@@ -23,13 +22,11 @@ function App() {
     return stories.filter(story => story.Status === selectedStatus);
   }, [stories, selectedStatus]);
 
-
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const currentStories = filteredStories.slice(indexOfFirst, indexOfLast);
 
   const totalPages = Math.ceil(filteredStories.length / itemsPerPage);
-
 
   const handleStatusChange = (Status) => {
     setSelectedStatus(Status);
@@ -44,17 +41,20 @@ function App() {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  
+  const handleCardClick = (storyId) => {
+    navigate(`/story/${storyId}`);
+  };
+
   const getButtonStyles = (Status) => {
     const baseStyles = "px-8 py-3 rounded-full font-bold text-white shadow-lg transition-all flex items-center gap-2";
     
     if (selectedStatus === Status) {
       switch(Status) {
-        case "new":
+        case "New":
           return `${baseStyles} bg-gradient-to-r from-purple-600 to-purple-700`;
-        case "in progress":
+        case "In Progress":
           return `${baseStyles} bg-gradient-to-r from-yellow-500 to-yellow-600`;
-        case "completed":
+        case "Completed":
           return `${baseStyles} bg-gradient-to-r from-green-400 to-green-500`;
         case "all":
           return `${baseStyles} bg-gradient-to-r from-cyan-500 to-blue-600`;
@@ -66,15 +66,24 @@ function App() {
     return `${baseStyles} bg-gray-700 opacity-60 hover:opacity-80`;
   };
 
-  
+  const getStatusIcon = (Status) => {
+    switch(Status) {
+      case "New":
+        return "🅰️";
+      case "In Progress":
+        return "🏆";
+      case "Completed":
+        return "✅";
+      default:
+        return "";
+    }
+  };
 
   return (
     <div className="App min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-indigo-950 py-10 px-4">
-     
-       <div className="text-center mb-8">
+      <div className="text-center mb-8">
         <h1 className="text-5xl font-bold text-white mb-8">Science Fiction Stories</h1>
         
-       
         <div className="flex gap-4 justify-center flex-wrap mb-8">
           <button
             onClick={() => handleStatusChange("all")}
@@ -96,11 +105,12 @@ function App() {
         </div>
       </div>
 
-   
       <div className="grid grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
         {currentStories.length > 0 ? (
           currentStories.map((story) => (
-            <Cards key={story._id} story={story} />
+            <div key={story._id} onClick={() => handleCardClick(story._id)} className="cursor-pointer">
+              <Cards story={story} />
+            </div>
           ))
         ) : (
           <div className="col-span-4 text-center py-20 text-gray-400 text-xl">
@@ -109,7 +119,6 @@ function App() {
         )}
       </div>
 
-    
       {filteredStories.length > 0 && totalPages > 1 && (
         <div className="flex justify-between items-center max-w-7xl mx-auto px-4">
           <button
