@@ -12,7 +12,7 @@ function useFetchStories() {
         const res = await fetch(url);
         const data = await res.json();
 
-        // ✅ FIX: access the array inside the object
+       
         const limitedStories = (data || [])
 
         setStories(limitedStories);

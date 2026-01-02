@@ -17,5 +17,3 @@ root.render(
   </React.StrictMode>
 );
 
-// Make sure you have react-router-dom installed:
-// npm install react-router-dom

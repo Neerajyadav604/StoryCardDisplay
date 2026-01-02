@@ -119,7 +119,7 @@ export default function StoryDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-indigo-950 py-10 px-4">
-      {/* Back Button */}
+     
       <div className="max-w-7xl mx-auto mb-4">
         <button
           onClick={handleBackToList}
@@ -129,7 +129,7 @@ export default function StoryDetailPage() {
         </button>
       </div>
 
-      {/* Header */}
+    
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold mb-2">
           <span className="text-purple-400">The Lost City of</span>
@@ -140,7 +140,7 @@ export default function StoryDetailPage() {
         </p>
       </div>
 
-      {/* Tab Navigation */}
+   
       <div className="flex gap-4 justify-center mb-10">
         {tabs.map((tab) => (
           <button
@@ -154,9 +154,9 @@ export default function StoryDetailPage() {
         ))}
       </div>
 
-      {/* Tab Content */}
+     
       <div className="max-w-6xl mx-auto">
-        {/* Word Explorer Tab */}
+       
         {activeTab === "word-explorer" && (
           <div>
             <p className="text-center text-gray-300 mb-8 text-lg">
@@ -179,7 +179,7 @@ export default function StoryDetailPage() {
           </div>
         )}
 
-        {/* Story Adventure Tab */}
+       
         {activeTab === "story-adventure" && (
           <div className="bg-gradient-to-b from-purple-900 to-indigo-900 rounded-xl p-8 border-2 border-purple-500">
             <h2 className="text-3xl font-bold text-white mb-6 text-center">
@@ -204,7 +204,7 @@ export default function StoryDetailPage() {
           </div>
         )}
 
-        {/* Brain Quest Tab */}
+       
         {activeTab === "brain-quest" && (
           <div className="space-y-6">
             <p className="text-center text-gray-300 mb-8 text-lg">
@@ -274,7 +274,7 @@ export default function StoryDetailPage() {
         )}
       </div>
 
-      {/* Navigation Buttons */}
+     
       <div className="flex justify-center gap-4 mt-12">
         <button 
           onClick={handlePrevStory}
